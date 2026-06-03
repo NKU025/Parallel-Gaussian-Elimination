@@ -1,0 +1,7 @@
+Matrix Size : 2048x2048
+Serial Latency : 3575.58 (ms) 
+NEON Latency   : 1730.09 (ms) 
+Speedup        : 2.0667x
+----------------------------------------
+
+Authorized users only. All activities may be monitored and reported.
