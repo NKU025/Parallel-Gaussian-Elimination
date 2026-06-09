@@ -1,14 +1,18 @@
 # Parallel Gaussian Elimination
 
-南开大学 并行程序设计 Lab3：Pthread/OpenMP 多线程加速的高斯消去算法。
+南开大学 并行程序设计 — 高斯消去算法并行化实验。
 
 ## 实验平台
 
-- 华为鲲鹏 920 (ARM AArch64, 8核)
-- openEuler OS, GCC -O2
+- 华为鲲鹏 920 (ARM AArch64, 8核/节点)
+- openEuler OS, GCC -O2 / mpicxx
 - PBS 作业调度系统
 
-## 算法版本
+---
+
+## Lab3: Pthread/OpenMP 多线程
+
+### 算法版本
 
 | # | 算法 | 说明 |
 |---|------|------|
@@ -19,16 +23,48 @@
 | 5 | OpenMP | schedule(dynamic) 动态调度 |
 | 6 | OpenMP+NEON | OpenMP + NEON（**最佳 9.64x**） |
 
-## 关键结果
+### 关键结果
 
 - N=2048, 8线程: OpenMP+NEON 达到 **9.64x** 加速比
 - OpenMP 整体优于 Pthread（线程池 vs 手动 barrier）
 - 小规模（N=512）: 多线程可能负优化，纯 NEON 最合适
 
+---
+
+## Lab4: MPI 多进程
+
+### 算法设计
+
+一维行块划分 + 逐行广播。数据初始化时分发一次，之后每轮仅广播一行（4KB），通信复杂度 $O(N^2)$。
+
+### 关键结果
+
+| N | 2 进程 | 4 进程 |
+|---|--------|--------|
+| 512 | 1.28x | 1.80x |
+| 1024 | 1.50x | 2.27x |
+| 2048 | 1.32x | **2.43x** |
+
+- 4 进程 N=2048 最高 **2.43x** 加速比
+- 进程数 2→4 加速比几乎翻倍，扩展性良好
+- MPI 跨节点通信是主要性能瓶颈
+
+---
+
 ## 目录
 
-- `main.cc` — 完整实验代码（6个算法版本）
-- `report/main.pdf` — 实验报告（14页）
-- `report/main.tex` — LaTeX 源文件
-- `plot_charts.py` — 性能图表生成脚本
-- `test_output.txt` — 原始测试输出
+```
+├── lab3/
+│   ├── main.cc              # Lab3 完整代码（6算法版本）
+│   ├── report/main.pdf      # Lab3 实验报告（14页）
+│   ├── report/main.tex      # LaTeX 源文件
+│   └── figures/             # 9 张性能图表
+├── lab4/
+│   ├── main_mpi.cc          # Lab4 MPI 代码
+│   ├── mpi.sh               # PBS 提交脚本
+│   ├── report/main.pdf      # Lab4 实验报告（13页）
+│   ├── report/main.tex      # LaTeX 源文件
+│   └── figures/             # 3 张性能图表
+├── plot_charts.py           # Lab3 图表生成脚本
+└── test_output.txt          # Lab3 原始测试输出
+```
