@@ -73,6 +73,8 @@
 │   └── report/               # 实验报告
 ├── lab3/
 │   ├── main.cc              # Lab3 完整代码（6算法版本）
+│   ├── plot_charts.py       # 图表生成脚本
+│   ├── test_output.txt      # 原始测试输出
 │   ├── report/main.pdf      # Lab3 实验报告（14页）
 │   ├── report/main.tex      # LaTeX 源文件
 │   └── figures/             # 9 张性能图表
