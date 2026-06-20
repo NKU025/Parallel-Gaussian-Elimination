@@ -64,6 +64,24 @@
 
 ---
 
+## Lab5: GPU 编程
+
+### HIP 课程（基础 7 分）
+
+AMD AUP 云端平台完成 6 个 HIP 实验：Vector Addition、Matrix Transpose、Histogram、Parallel Reduction、Monte Carlo、K-Means。
+
+### CUDA 高斯消去（进阶 2 分）
+
+在 NVIDIA Tesla T4 上实现 CUDA 版本的高斯消去算法。
+
+| N | CPU (ms) | GPU (ms) | 加速比 |
+|---|---------|----------|--------|
+| 512 | 29.76 | 11.44 | 2.60x |
+| 1024 | 403.89 | 26.56 | 15.21x |
+| 2048 | 2832.34 | 142.34 | **19.90x** |
+
+---
+
 ## 目录
 
 ```
@@ -84,6 +102,10 @@
 │   ├── report/main.pdf      # Lab4 实验报告（13页）
 │   ├── report/main.tex      # LaTeX 源文件
 │   └── figures/             # 3 张性能图表
+├── lab5/
+│   ├── main_gpu.cu          # Lab5 CUDA 代码
+│   ├── report/main.pdf      # Lab5 实验报告（19页）
+│   └── report/main.tex      # LaTeX 源文件
 ├── plot_charts.py           # Lab3 图表生成脚本
 └── test_output.txt          # Lab3 原始测试输出
 ```
