@@ -82,9 +82,39 @@ AMD AUP 云端平台完成 6 个 HIP 实验：Vector Addition、Matrix Transpose
 
 ---
 
+## 期末报告: 多架构高斯消去 + Gröbner 基探索
+
+四架构（SIMD/OpenMP/MPI/CUDA）融合 + Gröbner 基特殊高斯消去并行化。
+
+### 普通高斯消去（四架构）
+
+| 架构 | 配置 | 加速比 |
+|------|------|--------|
+| NEON SIMD | 4 lanes | 2.07x |
+| OpenMP+NEON | 8线程 | **9.64x** |
+| MPI | 4进程 | 2.43x |
+| CUDA | Tesla T4 | **19.90x** |
+
+### Gröbner 基（新增）
+
+GF(2) 稀疏矩阵特殊高斯消去：位向量存储 + NEON XOR + MPI 行划分。
+
+| 方案 | cols=2000 | 发现 |
+|------|-----------|------|
+| Serial | 6.19 ms | 基线 |
+| NEON | 6.33 ms | 稀疏性导致无加速 |
+| MPI P=4 | 4.70 ms | 通信开销 > 并行收益 |
+
+---
+
 ## 目录
 
 ```
+├── final/
+│   ├── report/main.pdf        # 期末报告（26页）
+│   ├── report/main.tex        # LaTeX 源文件
+│   ├── report/figures/        # 5张图表
+│   └── groebner/              # Gröbner 基完整代码
 ├── lab2/
 │   ├── src/main.cc           # Lab2 SIMD NEON 代码
 │   ├── scripts/test.sh       # 测试脚本
